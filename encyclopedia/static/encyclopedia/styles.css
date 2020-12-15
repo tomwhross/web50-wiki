@@ -13,10 +13,13 @@ h1 {
 }
 
 textarea {
-    height: 90vh;
+    height: 70vh;
     width: 80%;
 }
 
+input {
+    width: 80%
+}
 .main {
     padding: 10px;
 }
