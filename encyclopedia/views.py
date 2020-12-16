@@ -1,3 +1,5 @@
+import random
+
 import markdown2
 from django import forms
 from django.http import HttpResponseRedirect
@@ -75,3 +77,34 @@ def create_entry(request):
             return HttpResponseRedirect(reverse("view_entry", args=(title,)))
 
     return render(request, "encyclopedia/create_entry.html", {"form": NewEntryForm()})
+
+
+def edit_entry(request, entry):
+    if request.method == "POST":
+        form = NewEntryForm(request.POST)
+        if form.is_valid():
+            title = form.cleaned_data["title"]
+
+            markdown = form.cleaned_data["markdown"]
+
+            util.save_entry(title, markdown)
+
+            return HttpResponseRedirect(reverse("view_entry", args=(title,)))
+
+    entry_markdown = util.get_entry(entry)
+
+    form = NewEntryForm(initial={"title": entry, "markdown": entry_markdown})
+    return render(
+        request, "encyclopedia/edit_entry.html", {"form": form, "entry": entry}
+    )
+
+
+def random_entry(request, entry=None):
+
+    all_entries = util.list_entries()
+
+    if entry:
+        all_entries.remove(entry)
+    entry = random.choice(all_entries)
+
+    return HttpResponseRedirect(reverse("view_entry", args=(entry,)))

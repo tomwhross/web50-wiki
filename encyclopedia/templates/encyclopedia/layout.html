@@ -25,7 +25,10 @@
                 <a href="{% url 'create_entry' %}">Create New Page</a>
             </div>
             <div>
-                Random Page
+                {% block random_entry %}
+                <a href="{% url 'random_entry' %}">Random Page</a>
+                {% endblock %}
+
             </div>
             {% block nav %}
             {% endblock %}

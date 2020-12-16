@@ -4,7 +4,12 @@
 {{ entry_title }}
 {% endblock %}
 
+{% block random_entry %}
+<a href="{% url 'random_entry' entry_title %}">Random Page</a>
+{% endblock %}
+
 {% block body %}
+<a href="{% url 'edit_entry' entry_title %}">Edit Entry</a>
 {% autoescape off %}
 {{ entry_body }}
 {% endautoescape %}
